@@ -1,65 +1,116 @@
-import Image from "next/image";
+// import Hero from "@/components/Hero";
+// import Filters from "@/components/Filters";
+// import PropertyListings from "@/components/PropertyListings";
+// import WhyChooseUs from "@/components/WhyChooseUs";
+// import AboutUsHome from "@/components/AboutUsHome";
+// import FeaturedAgents from "@/components/FeaturedAgents";
+// import LatestBlogPosts from "@/components/LatestBlogPosts";
+// import DreamHomeGenerator from "@/components/DreamHomeGenerator";
+// import { MOCK_PROPERTIES } from "@/lib/data";
+
+// function getFilteredProperties(filters) {
+//   const { listingType, location, propertyType } = filters;
+
+//   return MOCK_PROPERTIES.filter((property) => {
+//     const listingTypeMatch =
+//       listingType === "buy"
+//         ? property.type === "sale"
+//         : property.type === "rent";
+//     const locationMatch =
+//       !location ||
+//       property.location.toLowerCase().includes(location.toLowerCase());
+//     const propertyTypeMatch =
+//       !propertyType ||
+//       propertyType === "any" ||
+//       property.category.toLowerCase() === propertyType.toLowerCase();
+
+//     return listingTypeMatch && locationMatch && propertyTypeMatch;
+//   });
+// }
+
+// export default function Home({ searchParams={} }) {
+//   const filters = {
+//     listingType: searchParams.listingType || "buy",
+//     location: searchParams.location || "",
+//     propertyType: searchParams.propertyType || "any",
+//   };
+
+//   const filteredProperties = getFilteredProperties(filters);
+
+//   return (
+//     <>
+//       <Hero />
+//       <PropertyListings properties={filteredProperties.slice(0, 8)} />
+//       <WhyChooseUs />
+//       <AboutUsHome />
+//       <FeaturedAgents />
+//       <LatestBlogPosts />
+//       <DreamHomeGenerator />
+//     </>
+//   );
+// }
+"use client";
+
+import { useState, useMemo } from "react";
+import Hero from "@/components/Hero";
+import PropertyListings from "@/components/PropertyListings";
+import WhyChooseUs from "@/components/WhyChooseUs";
+import AboutUsHome from "@/components/AboutUsHome";
+import FeaturedAgents from "@/components/FeaturedAgents";
+import LatestBlogPosts from "@/components/LatestBlogPosts";
+import DreamHomeGenerator from "@/components/DreamHomeGenerator";
+import { MOCK_PROPERTIES } from "@/lib/data";
 
 export default function Home() {
+  const [filters, setFilters] = useState({
+    listingType: "buy",
+    location: "",
+    propertyType: "any",
+  });
+
+  // GENERATE DROPDOWNS FROM REAL DATA
+  const locations = [...new Set(MOCK_PROPERTIES.map((p) => p.location))];
+  const categories = [...new Set(MOCK_PROPERTIES.map((p) => p.category))];
+
+  // FILTER FINAL PROPERTIES
+  const filteredProperties = useMemo(() => {
+    return MOCK_PROPERTIES.filter((property) => {
+      const matchesListing =
+        filters.listingType === "buy"
+          ? property.type === "sale"
+          : property.type === "rent";
+
+      const matchesLocation =
+        !filters.location ||
+        property.location
+          .toLowerCase()
+          .includes(filters.location.toLowerCase());
+
+      const matchesCategory =
+        filters.propertyType === "any" ||
+        property.category.toLowerCase() === filters.propertyType.toLowerCase();
+
+      return matchesListing && matchesLocation && matchesCategory;
+    });
+  }, [filters]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      <Hero
+        filters={filters}
+        setFilters={setFilters}
+        locations={locations}
+        categories={categories}
+      />
+
+      {/* Show Filtered Properties */}
+      <PropertyListings properties={filteredProperties.slice(0, 12)} />
+
+      <WhyChooseUs />
+      <AboutUsHome />
+      <FeaturedAgents />
+      <LatestBlogPosts />
+      <DreamHomeGenerator />
+    </>
   );
 }
