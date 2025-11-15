@@ -58,7 +58,6 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import AboutUsHome from "@/components/AboutUsHome";
 import FeaturedAgents from "@/components/FeaturedAgents";
 import LatestBlogPosts from "@/components/LatestBlogPosts";
-import DreamHomeGenerator from "@/components/DreamHomeGenerator";
 import { MOCK_PROPERTIES } from "@/lib/data";
 
 export default function Home() {
@@ -110,7 +109,6 @@ export default function Home() {
       <AboutUsHome />
       <FeaturedAgents />
       <LatestBlogPosts />
-      <DreamHomeGenerator />
     </>
   );
 }

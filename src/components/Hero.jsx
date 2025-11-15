@@ -100,12 +100,16 @@ const Hero = ({ filters, setFilters, locations, categories }) => {
         ))}
         <div className="absolute inset-0 bg-black/70"></div>
       </div>
-      <div className="flex flex-col gap-5 md:gap-10">
+      <div className="flex flex-col items-center gap-5 md:gap-10">
         {/* HERO CONTENT */}
         <div className="md:mt-20 sm:mt-15 mt-10 px-4 animate-fade-in-up">
-          <h1 className="text-3xl text-start w-[80%] sm:w-[70%] md:w-[60%] md:mb-5 md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
+          <h1 className="text-3xl text-center mx-auto w-[80%] sm:w-[70%] md:w-[60%] md:mb-5 md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
             Discover Your Future in Dubai's Skyline
           </h1>
+          <p className="text-lg md:text-xl text-center text-gray-300 max-w-3xl mx-auto">
+             Experience unparalleled luxury and futuristic living in the heart
+            of the world's most dynamic city. 
+          </p>
         </div>
 
         {/* FILTERS INSIDE HERO */}
