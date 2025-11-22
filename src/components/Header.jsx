@@ -18,8 +18,9 @@ const Header = () => {
   }, []);
 
   const navLinks = [
-    { name: "Buy", href: "/?listingType=buy" },
-    { name: "Rent", href: "/?listingType=rent" },
+    {name: "Home", href: "/" },
+    { name: "Buy", href: "/buy" },
+    { name: "Rent", href: "/rent" },
     { name: "Locations", href: "/locations" },
     { name: "Developers", href: "/developers" },
     { name: "Agents", href: "/agents" },

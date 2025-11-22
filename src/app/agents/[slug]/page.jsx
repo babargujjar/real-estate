@@ -18,7 +18,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const data = getAgentData(params.slug);
+   const resolvedParams = await params;
+  const data = getAgentData(resolvedParams.slug);
   if (!data) {
     return { title: 'Agent Not Found' };
   }
@@ -29,8 +30,9 @@ export async function generateMetadata({ params }) {
 }
 
 
-export default function AgentDetails({ params }) {
-  const data = getAgentData(params.slug);
+export default async function AgentDetails({ params }) {
+   const resolvedParams = await params;
+  const data = getAgentData(resolvedParams.slug);
 
   if (!data) {
     notFound();

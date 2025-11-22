@@ -27,13 +27,13 @@ const Filters = ({ filters, setFilters }) => {
   }, [filters.location]);
 
   const handleSearchClick = () => {
-    // Update URL params
-    const params = new URLSearchParams();
-    if (filters.listingType) params.set("listingType", filters.listingType);
-    if (filters.location) params.set("location", filters.location);
-    if (filters.propertyType) params.set("propertyType", filters.propertyType);
-
-    router.push(`/?${params.toString()}`);
+     const section = document.getElementById("listings");
+     if (section) {
+       section.scrollIntoView({
+         behavior: "smooth",
+         block: "start",
+       });
+     }
   };
 
   const activeBtnClasses = "bg-brand-primary text-brand-dark";
@@ -78,7 +78,7 @@ const Filters = ({ filters, setFilters }) => {
 
             {/* Dropdown */}
             {showLocationDropdown && filteredLocations.length > 0 && (
-              <ul className="absolute w-full mt-1 bg-brand-dark border border-gray-600 rounded-lg shadow-xl z-30 max-h-48 overflow-y-auto">
+              <ul className="absolute text-start w-full mt-1 bg-brand-dark border border-gray-600 rounded-lg shadow-xl z-30 max-h-48 overflow-y-auto">
                 {filteredLocations.map((loc, index) => (
                   <li
                     key={index}

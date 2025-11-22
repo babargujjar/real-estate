@@ -15,7 +15,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const post = getPost(params.slug);
+   const resolvedParams = await params;
+  const post = getPost(resolvedParams.slug);
   if (!post) {
     return { title: 'Post Not Found' };
   }
@@ -25,8 +26,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function PostPage({ params }) {
-  const post = getPost(params.slug);
+export default async function PostPage({ params }) {
+   const resolvedParams = await params;
+  const post = getPost(resolvedParams.slug);
 
   if (!post) {
     notFound();

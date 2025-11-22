@@ -103,6 +103,7 @@ export default function Home() {
       />
 
       {/* Show Filtered Properties */}
+      <div id="listings" />
       <PropertyListings properties={filteredProperties.slice(0, 12)} />
 
       <WhyChooseUs />

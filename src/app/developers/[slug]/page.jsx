@@ -18,7 +18,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const data = getDeveloperData(params.slug);
+   const resolvedParams = await params;
+  const data = getDeveloperData(resolvedParams.slug);
   if (!data) {
     return { title: 'Developer Not Found' };
   }
@@ -28,8 +29,10 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function DeveloperDetails({ params }) {
-  const data = getDeveloperData(params.slug);
+export default async function DeveloperDetails({ params }) {
+   const resolvedParams = await params;
+  // console.log('params', params)
+  const data = getDeveloperData(resolvedParams.slug);
 
   if (!data) {
     notFound();

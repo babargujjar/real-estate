@@ -5,7 +5,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { notFound } from 'next/navigation';
 
 function getProperty(id) {
-    return MOCK_PROPERTIES.find(p => p.id === parseInt(id));
+  return MOCK_PROPERTIES.find((p) => p.id === Number(id));
 }
 
 export async function generateStaticParams() {
@@ -15,7 +15,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-   const resolvedParams = await params; // ✅ FIX
+   const resolvedParams = await params;
    const property = getProperty(resolvedParams.id);
 
    if (!property) {
@@ -28,10 +28,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function PropertyDetailPage({ params }) {
-  console.log('params', params)
-const resolvedParams = await params; // ✅ FIX
-   const property = getProperty(resolvedParams.id);
-
+   const resolvedParams = await params;
+  // console.log('params', params)
+ const property = getProperty(resolvedParams.id);
 
   if (!property) {
     notFound();
